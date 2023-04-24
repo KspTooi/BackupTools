@@ -100,6 +100,10 @@ public class Application {
 
         }
 
+        if(size < 1){
+            destDirectory.delete();
+        }
+
         System.out.println("success totalSize:"+size);
 
 
