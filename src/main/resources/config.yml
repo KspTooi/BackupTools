@@ -1,0 +1,6 @@
+
+origin: C:\Users\Administrator\Desktop\
+destination: F:\InternalCache\
+
+ignore:
+  - '\\*.ink'
