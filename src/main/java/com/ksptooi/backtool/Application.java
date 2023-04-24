@@ -1,5 +1,6 @@
 package com.ksptooi.backtool;
 
+import org.apache.commons.io.FileUtils;
 import org.yaml.snakeyaml.Yaml;
 
 import java.io.*;
@@ -77,13 +78,20 @@ public class Application {
 
             try {
                 System.out.println("copy:"+f.getName());
-                Files.copy(f.toPath(),new File(destDirectory,f.getName()).toPath());
+
+                if(f.isDirectory()){
+                    FileUtils.copyDirectory(f,new File(destDirectory,f.getName()));
+                    FileUtils.deleteDirectory(f);
+                }
+
+                if(!f.isDirectory()){
+                    Files.copy(f.toPath(),new File(destDirectory,f.getName()).toPath());
+                    if(!f.delete()){
+                        System.out.println("cannot delete file:"+f.getName());
+                    }
+                }
 
                 size = size + f.getTotalSpace();
-
-                if(!f.delete()){
-                    System.out.println("cannot delete file:"+f.getName());
-                }
 
             } catch (IOException e) {
                 e.printStackTrace();
